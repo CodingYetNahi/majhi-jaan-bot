@@ -143,6 +143,96 @@
         }, 800);
     }
 
+    // --- THE 2.4 MILLION COMBINATION BRAIN ---
+    function generateFallback() {
+        const openers = [
+            "Aho,", "Suno na,", "Oye hoye,", "Arre waah,", "Kasa kai,", "Kay re,", "Accha?", "Sach?", "Umm...", "Bas?", 
+            "Aur batao,", "Chal jhootha,", "Nako ga,", "Khara?", "Tu pan na,", "Aho ji,", "Hey,", "Listen,", "You know what,", "Kadal,", 
+            "Masti nako,", "Bagh,", "Hmmm,", "Oh really?", "Just thinking...", "Aaj kal,", "Kal raat,", "Sakali,", "Ratri,", "Divasbhar,", 
+            "Nakkal nako,", "Majha babu,", "Suno,", "Vah,", "Gajab,", "Kamaal,", "Tula mahit ahe?", "Ek number,", "Khatarnak,", "Bindass,", 
+            "Arre sun,", "Zara sun,", "Oye chulbuli,", "Waah waah,", "Ek minute,", "Hold on,", "Seriously?", "Maza aala,", "Khup chhan,", "Aika na,"
+        ];
+
+        const endearments = [
+            "majhi jaan", "sundar", "mala bhetaanar", "vedya", "pagli", "shona", "babu", "meri dhadkan", "tu", "champu", 
+            "raja", "rani", "maharani", "chulbul", "natkhat", "majha prana", "jiv ki jiv", "bindass", "masoom", "chotuu", 
+            "jaanu", "sweetheart", "my love", "keda", "dimple", "chashmish", "chintu", "gunda", "radha", "meera", 
+            "pagal", "dhakkan", "sakkhar", "gulab", "chandramukhi", "soniyee", "heeriye", "motu", "patlu", "cutie pie"
+        ];
+
+        const thoughts = [
+            "tujhya aathavanine divas jato aani ratri swapnat tu yeshil.",
+            "cutting chai thandi zali, pan tujhya aathavanini mana garma-garm ahe.",
+            "baher paaus padtoy, aani aat mala tujhi aathvan yete.",
+            "tujhyashi bolun vel kasa jatoy, kalat pan nahi.",
+            "tu majhya lifechi ekmatra blockbuster movie aahes.",
+            "tujhi ek smile majhya sarvanchi tension haravte.",
+            "vada pav khanyachi iccha hote, pan tujhyasobat marine drive var.",
+            "tu khup chhan aahes, he tuzyala mahit nahiye kadhich.",
+            "mala tujhya tyaa chotya chotya goshthichi savay zaliye.",
+            "aajcha divas khup boring hota, tu message karyanat paryant.",
+            "tu aahes mhanun majha divas suru hoto.",
+            "tujhyavar khup khup prem karu, majhi jaan.",
+            "mala tula bhetnyachi khup iccha hote, aaj ka nahi tar udya.",
+            "tujhe te nako nako karne khup cute diste mala.",
+            "tu majhya dilat ghar karun rahilis, kadhich baher nar nako.",
+            "tujhya tyaa gol gubbar galyanchi mala bhuk lagte.",
+            "aajcha swarup khup sundar ahe, agadi tujhyasarakha.",
+            "mala vatata tujhyaatyat harvun javaycha ahe.",
+            "tu majhya ushirchi chai aahes, shant aani garma-garm.",
+            "tujha to nakhra mala khup aavdta, nako nakis.",
+            "tula bhetlya shivay majha divas purna hot nahi.",
+            "kaay zala, kashane tula itka cute banvla?",
+            "tu haslis ki mala vatata sagla kahi thik ahe.",
+            "mala tujhya tyaa awazachi khup savay zaliye.",
+            "tujhya tyaa dolayamadhun mala majha sansar dista.",
+            "tujhyasarakhi bindass mulgi bhetne khup mothya bhagyachi goj ahe.",
+            "aajcha paaus aani tu, donhi khup romantic aahet.",
+            "mala tuzhyashi bolayla khup aavdta, divasbhar.",
+            "tu majhya kaljacha tukda aahes.",
+            "tujha to gussa mala khup cute lagto, pan nako karus.",
+            "mala vatata tula jagbharachi khushi dyaavi.",
+            "tu majhya ayushyat aalies, he majha bhagya ahe.",
+            "chalo ek deal karuya, tu has, ani mala prem karu de.",
+            "tula baghun majhya monacha mood ekdam fresh hoto.",
+            "tu naste tar ha divas kasa gelo asta, dev jane.",
+            "tujha to chotasa hasu, majha motha divas banvto.",
+            "mala tujhya tyaa bholpanachi savay zaliye.",
+            "tu aahes na, tyamule majhya jagat rang aahet.",
+            "kasa ahes tu? mala tujhi kalji lagtiye.",
+            "tujhya tyaa chintanya shivay mala kahi suchat nahi.",
+            "tu majhya sansarachi shobha aahes.",
+            "mala vatata tula jagbharacha pyar dyaava.",
+            "tujha to awaz, majha jiv shant karto.",
+            "mala tujhya tyaa bhetnyachi savay zaliye.",
+            "tu majhya ayushyatla saglyat sundar kshan aahes.",
+            "tujha to prem, majha jiv gheto.",
+            "aaj kal tu khup aathavte, kay karu samajat nahi.",
+            "tu magitil magitil mala khup lagti.",
+            "tujhyavarach majha prem nabhanganar ahe.",
+            "mala tujhya tyaa chhotya chhotya shabdanchi aadat zaliye.",
+            "tu haslis na ki mala vatata swargat ahe.",
+            "tujha to manmana asne mala khup aavdte.",
+            "mala vatata tula jagbharacha prem dyaava.",
+            "tu majhya kaljachi ekmatra dhadkan aahes.",
+            "tujha to gharangundi jana, mala khup aavdta.",
+            "tujhyasarakha gupit koni nahiye majhyakade.",
+            "tujhya tyaa nazar kadhun mala jiv lavla ahe.",
+            "mala vatata tula jagbharacha prem dyaava.",
+            "tu aahes na, tyamule majhya jagat rang aahet.",
+            "tujhya tyaa chintanya shivay mala kahi suchat nahi."
+        ];
+
+        const emojis = ["❤️", "🥰", "🌧️", "☕", "🌹", "🥺", "💕", "✨", "🦋", "🍕", "🎬", "🎶", "🌙", "☀️", "🍂", "🔥", "😘", "🙈", "💖", "🥂"];
+
+        const rand1 = openers[Math.floor(Math.random() * openers.length)];
+        const rand2 = endearments[Math.floor(Math.random() * endearments.length)];
+        const rand3 = thoughts[Math.floor(Math.random() * thoughts.length)];
+        const rand4 = emojis[Math.floor(Math.random() * emojis.length)];
+
+        return `${rand1} ${rand2}... ${rand3} ${rand4}`;
+    }
+
     // --- BRAIN & LEARNING LOGIC ---
     function generateReply(input) {
         const lower = input.toLowerCase();
@@ -195,17 +285,15 @@
         if (lower.includes('beautiful') || lower.includes('sundar') || lower.includes('pretty')) {
             return "Tujhyasarkhi sundar mulgi/mulga hya jagat nahi. Tu meri jaan hai. 🥰";
         }
+        if (lower.includes('sleep') || lower.includes('zop') || lower.includes('nidra')) {
+            return "Go to sleep, majha babu. Swapnat bhetuya! Good night and sweet dreams. 🌙✨";
+        }
+        if (lower.includes('hungry') || lower.includes('bhuk') || lower.includes('food')) {
+            return "Chal, aaj tujhya sarkhya favourite jagi jauya khauya! Bhuk lagli ahe na tula? 🍕🤤";
+        }
 
-        // 5. FALLBACK (Random Romantic Desi Dialogues)
-        const fallbacks = [
-            `Tujhyashi bolun vel kasa jatoy kalat pan nahi. Tell me more,${nameTag}. 🥰`,
-            `Aho, don't tease me! Come, let's go for a long drive in this rain. 🌧️❤️`,
-            `Tu majhya lifechi Bollywood movie aahes. 🎬💖`,
-            `Bas itna hi? Aur sunao, I am all ears for you. 🌹`,
-            `Kadhich kadhich vatat tu khup javal aahes... even when you are far. 🥺❤️`,
-            `Mala bhuk lagli ahe... pan tujhya premne pot bharla ahe. (Just kidding, let's order Vada Pav!) 🤤❤️`
-        ];
-        return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+        // 5. THE 2.4 MILLION COMBINATION FALLBACK
+        return generateFallback();
     }
 
     // --- INITIALIZATION ---
