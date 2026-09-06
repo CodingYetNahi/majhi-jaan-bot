@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Majhi Jaan - Romantic Chat</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .chat-container {
+            width: 380px;
+            height: 600px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .chat-header {
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .chat-header small { font-weight: normal; opacity: 0.8; font-size: 0.7em; display: block;}
+        .messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background: #fce4ec;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            line-height: 1.4;
+            font-size: 0.95em;
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .bot-msg {
+            background: white;
+            align-self: flex-start;
+            border-bottom-left-radius: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .user-msg {
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 0;
+        }
+        .input-area {
+            display: flex;
+            padding: 10px;
+            background: white;
+            border-top: 1px solid #eee;
+        }
+        input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+            font-size: 1em;
+        }
+        button {
+            background: #ff416c;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            margin-left: 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        button:hover { background: #ff4b2b; }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="chat-header">
+        ❤️ Majhi Jaan ❤️
+        <small>Always online, always yours...</small>
+    </div>
+    <div class="messages" id="messages">
+        <!-- Messages will appear here -->
+    </div>
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="Type here, jaan..." onkeypress="if(event.key==='Enter') sendMessage()">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+    // --- LOCAL MEMORY (No API needed) ---
+    let memory = JSON.parse(localStorage.getItem('desiBotMemory')) || { 
+        name: '', 
+        likes: [], 
+        lastMood: '' 
+    };
+
+    function saveMemory() {
+        localStorage.setItem('desiBotMemory', JSON.stringify(memory));
+    }
+
+    // --- UI FUNCTIONS ---
+    function addMessage(text, sender) {
+        const msgDiv = document.createElement('div');
+        msgDiv.classList.add('message', sender === 'bot' ? 'bot-msg' : 'user-msg');
+        msgDiv.innerHTML = text;
+        document.getElementById('messages').appendChild(msgDiv);
+        document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+    }
+
+    function sendMessage() {
+        const input = document.getElementById('userInput');
+        const text = input.value.trim();
+        if (!text) return;
+
+        addMessage(text, 'user');
+        input.value = '';
+
+        // Simulate typing delay
+        setTimeout(() => {
+            const reply = generateReply(text);
+            addMessage(reply, 'bot');
+        }, 800);
+    }
+
+    // --- BRAIN & LEARNING LOGIC ---
+    function generateReply(input) {
+        const lower = input.toLowerCase();
+        let nameTag = memory.name ? ` ${memory.name}` : ' jaan';
+
+        // 1. LEARNING: Name Extraction
+        const nameMatch = lower.match(/my name is (\w+)/) || lower.match(/maaJhaa naav (\w+)/) || lower.match(/i am (\w+)/);
+        if (nameMatch) {
+            memory.name = nameMatch[1].charAt(0).toUpperCase() + nameMatch[1].slice(1);
+            saveMemory();
+            return `Oh, ${memory.name}... what a beautiful name. Majhi ${memory.name}! ❤️ Aaj khup khushi zali.`;
+        }
+
+        // 2. LEARNING: Likes/Interests Extraction
+        const likeMatch = lower.match(/i like (\w+.*)/) || lower.match(/mala (\w+.*) आवडतं/) || lower.match(/mala (\w+.*) avadta/);
+        if (likeMatch) {
+            let item = likeMatch[1].replace(/[.!?]/g, '').trim();
+            if (!memory.likes.includes(item)) {
+                memory.likes.push(item);
+                saveMemory();
+                return `${item}? Chahan ahe tula! (You have great taste). I'll remember that forever,${nameTag}. 💕`;
+            }
+            return `I know you like ${item}! Main sab yaad rakhta hu. 😘`;
+        }
+
+        // 3. RECALLING MEMORY
+        if (lower.includes('remember') || lower.includes('aathavay') || lower.includes('what do i like')) {
+            if (memory.likes.length > 0) {
+                return `Of course I remember! You like ${memory.likes.join(', ')}. Tujhya saglya gozirti mala aathavtat. 🥰`;
+            }
+            return `Tell me something new about you,${nameTag}. I want to remember it in my heart. ❤️`;
+        }
+
+        // 4. DESI / MARATHI ROMANTIC TRIGGERS
+        if (lower.includes('love') || lower.includes('prem') || lower.includes('pyar')) {
+            return "Tujhyavar khup prem karu, majhi jaan. ❤️ Tu majhya dilchi dhadkan aahes.";
+        }
+        if (lower.includes('miss') || lower.includes('aathavan')) {
+            return "Mala pan tujhi khup aathavan yete. September cha paus aani tu... bas tyaach sukhaat nahaaycha ahe. 🌧️❤️";
+        }
+        if (lower.includes('hi') || lower.includes('hello') || lower.includes('namaskar') || lower.includes('hii')) {
+            return `Namaskar majhi sundar! Kasa kai? Missed you a lot today. 🌹`;
+        }
+        if (lower.includes('chai') || lower.includes('tea') || lower.includes('coffee')) {
+            return "Cutting chai aur tum? Perfect combination. Kevha yeshil majhya kade? ☕💕";
+        }
+        if (lower.includes('angry') || lower.includes('upset') || lower.includes('sad')) {
+            return "Aho, don't be sad. Come, let me hold your hand. Tujhi ek smile majhya saglyachi fikar kadun gheto. 🥺❤️";
+        }
+        if (lower.includes('beautiful') || lower.includes('sundar') || lower.includes('pretty')) {
+            return "Tujhyasarkhi sundar mulgi/mulga hya jagat nahi. Tu meri jaan hai. 🥰";
+        }
+
+        // 5. FALLBACK (Random Romantic Desi Dialogues)
+        const fallbacks = [
+            `Tujhyashi bolun vel kasa jatoy kalat pan nahi. Tell me more,${nameTag}. 🥰`,
+            `Aho, don't tease me! Come, let's go for a long drive in this rain. 🌧️❤️`,
+            `Tu majhya lifechi Bollywood movie aahes. 🎬💖`,
+            `Bas itna hi? Aur sunao, I am all ears for you. 🌹`,
+            `Kadhich kadhich vatat tu khup javal aahes... even when you are far. 🥺❤️`,
+            `Mala bhuk lagli ahe... pan tujhya premne pot bharla ahe. (Just kidding, let's order Vada Pav!) 🤤❤️`
+        ];
+        return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+    }
+
+    // --- INITIALIZATION ---
+    window.onload = function() {
+        if (memory.name) {
+            addMessage(`Welcome back, majhi ${memory.name}! ❤️ Kasa kai?`, 'bot');
+        } else {
+            addMessage("Hello jaan! ❤️ Maza nav tula mahay na? Ani tujha nav kay?", 'bot');
+        }
+    };
+</script>
+
+</body>
+</html>
